@@ -1,4 +1,5 @@
 # PGConfig Documentation
+[![Netlify Status](https://api.netlify.com/api/v1/badges/60fc8549-1b40-4bbd-98b7-1a3586477dc8/deploy-status)](https://app.netlify.com/sites/pgconfig-docs/deploys)
 
 ## Usage
 
