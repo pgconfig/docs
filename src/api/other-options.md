@@ -1,19 +1,13 @@
 # Another API Options
 
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Address</th>
-            <th>Description</th>
-            <th>Output example</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><a href="https://api.pgconfig.org/v1/tuning/get-config-all-environments"><code>/v1/tuning/get-config-all-environments</code></a></td>
-            <td>show rules for all environments</td>
-            <td>```json
-            ...
+## All rules in all environments
+
+**URL:** [/v1/tuning/get-config-all-environments](https://api.pgconfig.org/v1/tuning/get-config-all-environments)
+
+Show all rules for all environments. This endpoint is currently used by the site.
+
+```json
+...
 "data": [
     {
     "configuration": [..],
@@ -36,12 +30,17 @@
     "environment": "Desktop"
     }
 ]
-...```</td>
-        </tr>
-        <tr>
-            <td><a href="https://api.pgconfig.org/v1/tuning/list-environments"><code>/v1/tuning/list-environments</code></a></td>
-            <td>Show all environments</td>
-            <td><pre><code class="language-json"></code>...
+...
+```
+
+## List Environments
+
+**URL:** [/v1/tuning/list-environments`](https://api.pgconfig.org/v1/tuning/list-environments)
+
+Show all environments.
+
+```json
+...
 "data": [
     "WEB",
     "OLTP",
@@ -49,12 +48,18 @@
     "Mixed",
     "Desktop"
 ],
-...</pre></td>
-        </tr>
-        <tr>
-            <td><a href="https://api.pgconfig.org/v1/generators/pgbadger/get-config"><code>/v1/generators/pgbadger/get-config</code></a></td>
-            <td>Show the pgbadger configurations (accepts the <code>format</code> parameter)</td>
-            <td><pre><code class="language-json"></code>...
+...
+```
+
+## PGBadger Configuration
+
+**URL:** [/v1/generators/pgbadger/get-config`](https://api.pgconfig.org/v1/generators/pgbadger/get-config)
+
+Show the pgbadger configurations (accepts the <code>format</code> parameter)
+
+
+```json
+...
 "data": [
     {
     "category": "log_config",
@@ -101,9 +106,5 @@
         }
     ]
 },
-...</pre></td>
-        </tr>
-    </tbody>
-</table>
-
-Another contexts are being developed.
+...
+```

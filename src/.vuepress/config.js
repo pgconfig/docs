@@ -40,10 +40,6 @@ module.exports = {
     lastUpdated: true,
     nav: [
       {
-        text: 'Guide',
-        link: '/guide/',
-      },
-      {
         text: 'API Documentation',
         link: '/api/'
       },
@@ -53,16 +49,6 @@ module.exports = {
       }
     ],
     sidebar: {
-      '/guide/': [
-        {
-          title: 'Guide',
-          collapsable: false,
-          children: [
-            '',
-            'using-vue',
-          ]
-        }
-      ],
       '/api/': [
         {
           title: 'V1 API Documentation',

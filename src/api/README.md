@@ -165,7 +165,7 @@ Don't forget, when setting the `total_ram` parameter, set the value like the exp
 
 The list below lists the available parameters:
 
-| Parameter        | Possible values       | Default Value      | Description                                                                                 |
+| Parameter        | Possible values                             | Default Value      | Description                                                           |
 | ---------------- |:-------------------------------------------:|:------------------:|-----------------------------------------------------------------------|
 | pg_version       | from `9.0` until `12`                       | `12`               | Defines the PostgreSQL Version                                        |
 | total_ram        | any value above `1GB`                       | `2GB`              | Defines the **total dedicated memory** to PostgreSQL                  |
@@ -173,6 +173,8 @@ The list below lists the available parameters:
 | environment_name | `WEB`, `OLTP`, `DW`, `Mixed` and `Desktop`  | `WEB`              | Defines the environment that the server will run (more details below) |
 | os_type          | `Linux`, `Windows` and `Unix`               | `Linux`            | Defines the type of operating system used                             |
 | arch             | `x86-64` and `i686`                         | `x86-64`           | Defines the server architecture                                       |
+| drive_type       | `HDD`, `SSD` and `SAN`                      | `HDD`              | Defines the default storage type                                      |
+| cpus             | any value above `1`                         | `-1`               | Defines the total CPUs available                                      |
 | format           | `json`, `conf` and `alter_system`           | `json`             | Defines the output format                                             |
 
 ### Specific for the `JSON` output
@@ -180,7 +182,7 @@ The list below lists the available parameters:
 
 | Parameter     | Possible values       | Default Value      | Description                                          |
 | ------------- |:---------------------:|:------------------:|------------------------------------------------------|
-| show_doc      | `true` or `false`     | `json`             | Shows the documentation |
+| show_doc      | `true` or `false`     | `json`             | Shows the documentation                              |
 
 ### Specific for the `conf` or `alter_system` output
 
