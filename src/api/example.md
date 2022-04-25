@@ -8,32 +8,46 @@ $ curl 'https://api.pgconfig.org/v1/tuning/get-config?environment_name=WEB&forma
 
 ## How the values are calculated?
 
-In an attempt to make the process simpler, i created a API context to list the rules. It can be access by the URL below:
+Default values are set in the [`pkg/category` package](https://github.com/pgconfig/api/tree/main/pkg/category). Take by example the [Checkpoint Configuration category](https://github.com/pgconfig/api/blob/main/pkg/category/checkpoint.go#L18-L26):
 
-- [/v1/tuning/get-rules](https://api.pgconfig.org/v1/tuning/get-rules) 
-
-::: tip
-This context supports the follow parameters: `os_type`, `arch` e `environment_name`. 
-:::
-
-The fields who contains details how each parameter are calculated are `formula` and `max_value`, eg:
-
-```json
-...
-"format": "Bytes",
-"formula": "TOTAL_RAM / 4",
-"max_value": "2047MB",
-"name": "shared_buffers"
-...
+```go
+// ...
+	return &CheckpointCfg{
+		MinWALSize:                 config.Byte(2 * config.GB),
+		MaxWALSize:                 config.Byte(3 * config.GB),
+		CheckpointCompletionTarget: 0.5,
+		WALBuffers:                 -1, // -1 means automatic tuning
+		CheckpointSegments:         16,
+	}
 ```
 
-> Note that the values are influenced by the filters mentioned above.
+Once the default values are set, they are computed based in the input, set in the [`pkg/rules` package](https://github.com/pgconfig/api/tree/main/pkg/rules). Take by example [the storage rules](https://github.com/pgconfig/api/blob/main/pkg/rules/storage.go#L8-L24):
 
-## Calling the `get-rules` context
+```go
+// ...
+func computeStorage(in *config.Input, cfg *category.ExportCfg) (*category.ExportCfg, error) {
 
-I recommend that you open the URL below on the browser for easy viewing (or just [format the json](https://jsonformatter.curiousconcept.com/)):
+	switch in.DiskType {
+	case "SSD":
+		cfg.Storage.EffectiveIOConcurrency = 200
+	case "SAN":
+		cfg.Storage.EffectiveIOConcurrency = 300
+	default:
+		cfg.Storage.EffectiveIOConcurrency = 2
+	}
 
-```bash
-curl 'https://api.pgconfig.org/v1/tuning/get-rules?os_type=Windows&arch=i686&environment_name=OLTP'
+	if in.DiskType != "HDD" {
+		cfg.Storage.RandomPageCost = 1.1
+	}
+
+	return cfg, nil
+}
 ```
 
+The [rules are computed in the following order](https://github.com/pgconfig/api/blob/main/pkg/rules/compute.go#L12-L22):
+
+1. Arch
+1. OS
+1. Profile
+1. Storage
+1. Postgres Version
