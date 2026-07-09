@@ -1,16 +1,18 @@
-FROM node:16-alpine AS build
+FROM node:22-alpine AS build
+
+RUN apk add --no-cache git
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json package-lock.json* ./
+RUN npm ci || npm install
 
 COPY . .
-RUN yarn build
+RUN npm run build
 
 FROM nginx:alpine
 
-COPY --from=build /app/src/.vuepress/dist /usr/share/nginx/html
+COPY --from=build /app/src/.vitepress/dist /usr/share/nginx/html
 
 EXPOSE 80
 

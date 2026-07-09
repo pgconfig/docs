@@ -1,5 +1,6 @@
 node_modules
-dist
 .git
 .DS_Store
 npm-debug.log
+src/.vitepress/cache
+src/.vitepress/dist
